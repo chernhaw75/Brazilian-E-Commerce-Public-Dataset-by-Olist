@@ -9,6 +9,11 @@ This project demonstrates how to:
 ✅ Prepare for dbt transformations
 
 ------------------------------------------------------------------------
+## 1. Set Up Environment
+
+### Step 1: conda env create -f eltn file path
+------------------------------------------------------------------------
+------------------------------------------------------------------------
 ## 2. Generate Kaggle API Key
 
 ### Step 1: Login to Kaggle
