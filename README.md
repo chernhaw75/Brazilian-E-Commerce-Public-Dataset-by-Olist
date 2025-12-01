@@ -2,19 +2,22 @@
 
 This project demonstrates how to:
 
-✅ Generate Kaggle API credentials\
-✅ Download Kaggle datasets using Python\
-✅ Store raw CSV safely\
-✅ Load into BigQuery using Meltano\
+✅ Generate Kaggle API credentials  
+✅ Download Kaggle datasets using Python  
+✅ Store raw CSV safely  
+✅ Load into BigQuery using Meltano  
+✅ Verify that CSV row counts match BigQuery  
 ✅ Prepare for dbt transformations
 
-------------------------------------------------------------------------
-## 1. Set Up Environment
+---
 
-### Step 1: 
-```
-conda env create -f eltn file path
-conda activate eltn
+## 1. Conda Environment
+
+```bash
+# From the folder where your environment YAML file is
+conda env create -f eltn_environment.yml   # or your file path
+conda activate eltn                        
+
 ```
 ------------------------------------------------------------------------
 ## 2. Generate Kaggle API Key
@@ -67,39 +70,14 @@ __pycache__/
 
 ------------------------------------------------------------------------
 
-## 5. Download Kaggle CSVs Using Python
+## 5. Download Kaggle CSVs Using Python into data/
+Use the helper script download_kaggle.py to pull all 9 Olist CSVs and save them to the data/ folder.
 
-``` python
-import kagglehub
-from kagglehub import KaggleDatasetAdapter
-from pathlib import Path
+You can run it either from terminal:
 
-DATASET_SLUG = "olistbr/brazilian-ecommerce"
 
-FILES = [
-    "olist_customers_dataset.csv",
-    "olist_geolocation_dataset.csv",
-    "olist_order_items_dataset.csv",
-    "olist_order_payments_dataset.csv",
-    "olist_order_reviews_dataset.csv",
-    "olist_orders_dataset.csv",
-    "olist_products_dataset.csv",
-    "olist_sellers_dataset.csv",
-    "product_category_name_translation.csv",
-]
-
-data_dir = Path("data")
-data_dir.mkdir(exist_ok=True)
-
-for file in FILES:
-    df = kagglehub.load_dataset(
-        KaggleDatasetAdapter.PANDAS,
-        DATASET_SLUG,
-        file
-    )
-    output = data_dir / file
-    df.to_csv(output, index=False)
-    print(f"Saved {file} → {len(df)} rows")
+``` bash
+python download_kaggle.py
 ```
 
 ------------------------------------------------------------------------
