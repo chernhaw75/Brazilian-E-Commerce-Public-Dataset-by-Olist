@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Olist E‑Commerce Analytics Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Olist E‑Commerce Analytics</span>
+    </div>
+  </nav>
+
+  <div class="container mb-4">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <h6 class="card-subtitle text-muted">Total Orders</h6>
+            <h3 id="kpi-orders">–</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <h6 class="card-subtitle text-muted">Total Revenue</h6>
+            <h3 id="kpi-revenue">–</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <h6 class="card-subtitle text-muted">Avg Delivery (Days)</h6>
+            <h3 id="kpi-delivery">–</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <h6 class="card-subtitle text-muted">5★ Review Rate</h6>
+            <h3 id="kpi-reviews">–</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">Monthly Revenue Trend</div>
+          <div class="card-body">
+            <canvas id="chartRevenue"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">Top 5 States by Orders</div>
+          <div class="card-body">
+            <canvas id="chartStates"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // TODO: Replace with real data (from CSV/JSON/API)
+    const mockKpis = {
+      orders: 100000,
+      revenue: 12500000,
+      deliveryDays: 8.2,
+      fiveStarRate: 0.64
+    };
+
+    document.getElementById('kpi-orders').innerText = mockKpis.orders.toLocaleString();
+    document.getElementById('kpi-revenue').innerText = 'R$ ' + mockKpis.revenue.toLocaleString();
+    document.getElementById('kpi-delivery').innerText = mockKpis.deliveryDays.toFixed(1);
+    document.getElementById('kpi-reviews').innerText = (mockKpis.fiveStarRate*100).toFixed(1) + '%';
+
+    const ctxRevenue = document.getElementById('chartRevenue');
+    new Chart(ctxRevenue, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Revenue (R$)',
+          data: [150000, 175000, 190000, 210000, 230000, 260000],
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true }
+        }
+      }
+    });
+
+    const ctxStates = document.getElementById('chartStates');
+    new Chart(ctxStates, {
+      type: 'bar',
+      data: {
+        labels: ['SP', 'RJ', 'MG', 'RS', 'PR'],
+        datasets: [{
+          label: 'Orders',
+          data: [40000, 18000, 12000, 9000, 7000]
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
