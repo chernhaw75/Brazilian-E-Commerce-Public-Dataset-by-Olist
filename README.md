@@ -254,3 +254,19 @@ After that, match the csv file rows and columns vs bigquery rows and columns all
 ✅ Pipeline Complete\
 ✅ dbt transformations come next\
 ✅ Raw data fully preserved
+
+
+flowchart LR
+    A[Kaggle Dataset] --> B[Pandas Processing]
+    B --> C[CSV Files]
+    
+    C --> D[Meltano<br>Extract & Load]
+    D --> E[(BigQuery<br>Data Warehouse)]
+    
+    E --> F[dbt<br>Transform]
+    F --> G[dbt-expectations<br>Data Quality Tests]
+    
+    G --> H[EDA<br>Exploratory Data Analysis]
+    H --> I[Machine Learning]
+    I --> J[Dashboard<br>Streamlit / Power BI / HTML]
+
