@@ -15,21 +15,18 @@
 
   <style>
     :root {
-      /* Refined colour palette (deep blue + teal accent) */
+      /* Deep dark UI with bright teal / cyan accents */
       --bg: #020617;
-      --bg-elevated: #020617;
-      --card-bg: #0b1220;
-      --card-border: #1e293b;
+      --card-bg: #020617;
+      --card-border: #1f2937;
       --accent: #22c55e;
-      --accent-soft: rgba(34, 197, 94, 0.12);
       --accent-strong: #16a34a;
       --accent-alt: #38bdf8;
+      --accent-warm: #f97316;
       --text-main: #e5e7eb;
       --text-sub: #9ca3af;
-      --kpi-bg: #020617;
       --kpi-border: #111827;
       --chip-bg: rgba(15, 23, 42, 0.9);
-      --danger: #f97373;
       --scrollbar: #1f2933;
     }
 
@@ -237,7 +234,7 @@
     }
 
     .kpi-card {
-      background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
+      background: #020617;
       border: 1px solid var(--kpi-border);
       border-radius: 10px;
       padding: 10px 12px;
@@ -265,7 +262,7 @@
       color: var(--text-sub);
     }
 
-    /* Grid of charts per page */
+    /* Grid */
     .grid {
       display: grid;
       grid-template-columns: 1.3fr 1.2fr 1.1fr;
@@ -327,7 +324,6 @@
       overflow-y: auto;
     }
 
-    /* About text */
     #about-text {
       padding: 10px;
       font-size: 12px;
@@ -344,7 +340,6 @@
       margin-bottom: 4px;
     }
 
-    /* Scrollbar tweak for dark theme */
     ::-webkit-scrollbar {
       width: 7px;
       height: 7px;
@@ -404,7 +399,7 @@
         <div class="kpi-card">
           <div class="kpi-label">Total Orders</div>
           <div class="kpi-value" id="kpi-cust-total-orders">–</div>
-          <div class="kpi-sub">Distinct order_id (fact_db_order_items)</div>
+          <div class="kpi-sub">Distinct order_id</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">Customer Cities</div>
@@ -427,7 +422,7 @@
         <article class="card">
           <div class="card-header">
             <div>
-              <div class="card-title">Total Customers by Year</div>
+              <div class="card-title">Customers by Year</div>
               <div class="card-subtitle">Distinct customers with at least one order</div>
             </div>
           </div>
@@ -448,7 +443,7 @@
           <div class="card-header">
             <div>
               <div class="card-title">Top 5 States by Customers</div>
-              <div class="card-subtitle">Based on dim_db_customers.customer_state</div>
+              <div class="card-subtitle">Click a bar to filter details</div>
             </div>
           </div>
           <div id="cust-top-states" class="chart"></div>
@@ -458,40 +453,33 @@
           <div class="card-header">
             <div>
               <div class="card-title">Bottom 5 States by Customers</div>
-              <div class="card-subtitle">States with smallest active customer base</div>
+              <div class="card-subtitle">States with smallest active base</div>
             </div>
           </div>
           <div id="cust-bottom-states" class="chart"></div>
         </article>
 
-        <!-- Customer map card -->
+        <!-- Customer map with bright bubbles -->
         <article class="card">
           <div class="card-header">
             <div>
-              <div class="card-title">Customer Density Map</div>
-              <div class="card-subtitle">Bubble size = number of customers per state</div>
+              <div class="card-title">Customer Bubble Map</div>
+              <div class="card-subtitle">Click a bubble to filter details</div>
             </div>
           </div>
           <div id="cust-map" class="chart"></div>
         </article>
 
+        <!-- Interactive detail panel -->
         <article class="card">
           <div class="card-header">
             <div>
-              <div class="card-title">About This View</div>
-              <div class="card-subtitle">Customer-side health check</div>
+              <div class="card-title">Selected State Detail</div>
+              <div class="card-subtitle">Driven by clicks on Top States or Map</div>
             </div>
           </div>
-          <div id="about-text">
-            <p>
-              Use this dashboard to understand how broad our customer base is
-              and whether growth is driven by new customers or repeat orders.
-            </p>
-            <ul>
-              <li>Monitor customer growth year-on-year.</li>
-              <li>See which Brazilian states contribute most customers.</li>
-              <li>Compare customer distribution and revenue distribution by state.</li>
-            </ul>
+          <div id="cust-state-detail" class="card-scroll" style="padding:10px;font-size:12px;color:var(--text-sub);">
+            <p>No state selected yet. Click a bar in <em>Top 5 States</em> or a bubble on the map.</p>
           </div>
         </article>
       </section>
@@ -510,7 +498,7 @@
         <div class="kpi-card">
           <div class="kpi-label">Total Sellers</div>
           <div class="kpi-value" id="kpi-seller-total-sellers">–</div>
-          <div class="kpi-sub">Distinct seller_id (dim_db_sellers)</div>
+          <div class="kpi-sub">Distinct seller_id</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">Seller Cities</div>
@@ -538,8 +526,8 @@
         <article class="card">
           <div class="card-header">
             <div>
-              <div class="card-title">Total Freight by Year</div>
-              <div class="card-subtitle">Sum of freight_value from fact_db_order_items</div>
+              <div class="card-title">Freight by Year</div>
+              <div class="card-subtitle">Sum of freight_value</div>
             </div>
           </div>
           <div id="seller-freight-year" class="chart"></div>
@@ -549,7 +537,7 @@
           <div class="card-header">
             <div>
               <div class="card-title">Revenue Trend by Year</div>
-              <div class="card-subtitle">Gross order item value (price + freight)</div>
+              <div class="card-subtitle">Gross order item value</div>
             </div>
           </div>
           <div id="seller-revenue-year" class="chart"></div>
@@ -559,7 +547,7 @@
           <div class="card-header">
             <div>
               <div class="card-title">Top 10 States by Sellers</div>
-              <div class="card-subtitle">How supply is concentrated</div>
+              <div class="card-subtitle">Where supply is concentrated</div>
             </div>
           </div>
           <div id="seller-top-states" class="chart"></div>
@@ -579,7 +567,7 @@
           <div class="card-header">
             <div>
               <div class="card-title">Product Category Breadth</div>
-              <div class="card-subtitle">Distinct product categories sold</div>
+              <div class="card-subtitle">Distinct categories sold (top 25)</div>
             </div>
           </div>
           <div id="seller-product-types" class="chart"></div>
@@ -629,7 +617,7 @@
           <div class="card-header">
             <div>
               <div class="card-title">Revenue Trend by Year</div>
-              <div class="card-subtitle">Using fact_db_order_items + dim_db_dates</div>
+              <div class="card-subtitle">fact_db_order_items + dim_db_dates</div>
             </div>
           </div>
           <div id="order-revenue-year" class="chart"></div>
@@ -639,7 +627,7 @@
           <div class="card-header">
             <div>
               <div class="card-title">Top Categories by Revenue</div>
-              <div class="card-subtitle">Top 10 product categories (BRL)</div>
+              <div class="card-subtitle">Click a bar to see details</div>
             </div>
           </div>
           <div id="order-category-revenue" class="chart"></div>
@@ -649,7 +637,7 @@
           <div class="card-header">
             <div>
               <div class="card-title">Orders by Year-Month</div>
-              <div class="card-subtitle">Order volume over time (distinct order_id)</div>
+              <div class="card-subtitle">Order volume over time</div>
             </div>
           </div>
           <div id="order-orders-yearmonth" class="chart"></div>
@@ -659,32 +647,44 @@
           <div class="card-header">
             <div>
               <div class="card-title">Top Sellers by Revenue</div>
-              <div class="card-subtitle">Top 25 sellers (BRL)</div>
+              <div class="card-subtitle">Top 25 sellers</div>
             </div>
           </div>
           <div id="order-seller-revenue" class="chart"></div>
+        </article>
+
+        <!-- Interactive category detail panel -->
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Selected Category Detail</div>
+              <div class="card-subtitle">Driven by clicks on Top Categories</div>
+            </div>
+          </div>
+          <div id="order-category-detail" class="card-scroll" style="padding:10px;font-size:12px;color:var(--text-sub);">
+            <p>No category selected yet. Click a bar in <em>Top Categories by Revenue</em>.</p>
+          </div>
         </article>
       </section>
     </section>
   </main>
 
   <script>
-    /********** 1. CONFIG (KEEPING YOUR IDs & KEYS) **********/
+    /********** 1. CONFIG (YOUR KEYS) **********/
     const CLIENT_ID  = "297911594147-9dbblho1k834h239f7g7tfhqtr6c1gvf.apps.googleusercontent.com";
     const API_KEY    = "AIzaSyDb4uWxi5LWSQXzFvf87cJtonj6zMzNCks";
     const PROJECT_ID = "durable-ripsaw-477914-g0";
 
-    // Your star-schema datasets in BigQuery
-    const DATASET_DIM   = "ecommerce_dim";
-    const DATASET_FACT  = "ecommerce_fact";
+    const DATASET_DIM  = "ecommerce_dim";
+    const DATASET_FACT = "ecommerce_fact";
 
-    const SCOPES        = "https://www.googleapis.com/auth/bigquery.readonly";
+    const SCOPES = "https://www.googleapis.com/auth/bigquery.readonly";
 
     const DISCOVERY_DOCS = [
       "https://bigquery.googleapis.com/$discovery/rest?version=v2"
     ];
 
-    // Coordinates for Brazilian states (approx centre of each state)
+    // Rough coordinates for Brazilian states (centre of each state)
     const BRAZIL_STATE_COORDS = {
       "AC": { lat: -9.11,     lon: -70.52 },
       "AL": { lat: -9.57,     lon: -36.55 },
@@ -692,33 +692,33 @@
       "AM": { lat: -5.0,      lon: -63.0  },
       "BA": { lat: -12.52,    lon: -41.69 },
       "CE": { lat: -5.08,     lon: -39.65 },
-      "DF": { lat: -15.795,   lon: -47.757778 },
-      "ES": { lat: -20.318889,lon: -40.337778 },
-      "GO": { lat: -15.933333,lon: -50.133333 },
-      "MA": { lat: -6.183333, lon: -45.616667 },
-      "MT": { lat: -15.566667,lon: -56.066667 },
-      "MS": { lat: -20.442778,lon: -54.645833 },
-      "MG": { lat: -19.816667,lon: -43.95 },
-      "PA": { lat: -5.666667, lon: -52.733333 },
-      "PB": { lat: -7.166667, lon: -36.833333 },
-      "PR": { lat: -24.0,     lon: -51.0 },
-      "PE": { lat: -8.34,     lon: -37.81 },
-      "PI": { lat: -8.233333, lon: -43.1 },
-      "RJ": { lat: -22.9,     lon: -43.2 },
-      "RN": { lat: -5.74,     lon: -36.55 },
-      "RO": { lat: -10.9,     lon: -62.76 },
-      "RR": { lat:  2.05,     lon: -61.4 },
-      "RS": { lat: -30.0,     lon: -53.0 },
-      "SC": { lat: -27.25,    lon: -50.333333 },
-      "SE": { lat: -10.59,    lon: -37.38 },
-      "SP": { lat: -23.533333,lon: -46.633333 },
-      "TO": { lat: -10.183333,lon: -48.333333 }
+      "DF": { lat: -15.8,     lon: -47.9  },
+      "ES": { lat: -20.3,     lon: -40.3  },
+      "GO": { lat: -15.9,     lon: -50.1  },
+      "MA": { lat: -6.2,      lon: -45.6  },
+      "MT": { lat: -15.6,     lon: -56.1  },
+      "MS": { lat: -20.4,     lon: -54.6  },
+      "MG": { lat: -19.8,     lon: -43.9  },
+      "PA": { lat: -5.7,      lon: -52.7  },
+      "PB": { lat: -7.2,      lon: -36.8  },
+      "PR": { lat: -24.0,     lon: -51.0  },
+      "PE": { lat: -8.3,      lon: -37.8  },
+      "PI": { lat: -8.2,      lon: -43.1  },
+      "RJ": { lat: -22.9,     lon: -43.2  },
+      "RN": { lat: -5.7,      lon: -36.5  },
+      "RO": { lat: -10.9,     lon: -62.8  },
+      "RR": { lat:  2.05,     lon: -61.4  },
+      "RS": { lat: -30.0,     lon: -53.0  },
+      "SC": { lat: -27.25,    lon: -50.3  },
+      "SE": { lat: -10.6,     lon: -37.4  },
+      "SP": { lat: -23.5,     lon: -46.6  },
+      "TO": { lat: -10.2,     lon: -48.3  }
     };
 
     /********** 2. GLOBAL STATE **********/
     let tokenClient;
     let gapiInited = false;
-    let gisInited = false;
+    let gisInited  = false;
 
     function setStatus(text, isError = false) {
       const el = document.getElementById("status");
@@ -764,7 +764,8 @@
       document.getElementById("kpi-cust-total-orders").textContent    = Number(f[1].v).toLocaleString();
       document.getElementById("kpi-cust-cities").textContent          = Number(f[2].v).toLocaleString();
       document.getElementById("kpi-cust-states").textContent          = Number(f[3].v).toLocaleString();
-      document.getElementById("kpi-cust-total-revenue").textContent   = "R$ " + Number(f[4].v || 0).toLocaleString(undefined, {maximumFractionDigits: 0});
+      document.getElementById("kpi-cust-total-revenue").textContent   =
+        "R$ " + Number(f[4].v || 0).toLocaleString(undefined, {maximumFractionDigits: 0});
     }
 
     async function loadSellerKPIs() {
@@ -784,8 +785,8 @@
       document.getElementById("kpi-seller-cities").textContent        = Number(f[1].v).toLocaleString();
       document.getElementById("kpi-seller-states").textContent        = Number(f[2].v).toLocaleString();
       document.getElementById("kpi-seller-orders").textContent        = Number(f[3].v).toLocaleString();
-      document.getElementById("kpi-seller-revenue").textContent       = "R$ " + Number(f[4].v || 0).toLocaleString(undefined, {maximumFractionDigits: 0});
-      document.getElementById("seller-product-types").setAttribute("data-total-product-types", f[5].v);
+      document.getElementById("kpi-seller-revenue").textContent       =
+        "R$ " + Number(f[4].v || 0).toLocaleString(undefined, {maximumFractionDigits: 0});
     }
 
     async function loadOrderKPIs() {
@@ -800,14 +801,15 @@
       const rows = await runQuery(sql);
       if (!rows.length) return;
       const f = rows[0].f;
-      document.getElementById("kpi-order-total-orders").textContent    = Number(f[0].v).toLocaleString();
-      document.getElementById("kpi-order-product-types").textContent   = Number(f[1].v).toLocaleString();
-      document.getElementById("kpi-order-customers").textContent       = Number(f[2].v).toLocaleString();
-      document.getElementById("kpi-order-sellers").textContent         = Number(f[3].v).toLocaleString();
-      document.getElementById("kpi-order-revenue").textContent         = "R$ " + Number(f[4].v || 0).toLocaleString(undefined, {maximumFractionDigits: 0});
+      document.getElementById("kpi-order-total-orders").textContent  = Number(f[0].v).toLocaleString();
+      document.getElementById("kpi-order-product-types").textContent = Number(f[1].v).toLocaleString();
+      document.getElementById("kpi-order-customers").textContent     = Number(f[2].v).toLocaleString();
+      document.getElementById("kpi-order-sellers").textContent       = Number(f[3].v).toLocaleString();
+      document.getElementById("kpi-order-revenue").textContent       =
+        "R$ " + Number(f[4].v || 0).toLocaleString(undefined, {maximumFractionDigits: 0});
     }
 
-    /********** 5. CUSTOMER CHARTS **********/
+    /********** 5. CUSTOMER CHARTS & DETAIL **********/
     async function chartCustomersByYear() {
       const sql = `
         SELECT
@@ -888,7 +890,10 @@
         states.push(r.f[0].v);
         counts.push(Number(r.f[1].v));
       });
-      Plotly.newPlot("cust-top-states", [{
+
+      const divId = "cust-top-states";
+
+      Plotly.newPlot(divId, [{
         type: "bar",
         x: states,
         y: counts,
@@ -899,6 +904,20 @@
         xaxis: { title: "State" },
         yaxis: { title: "Customers" }
       }, { responsive: true });
+
+      // make bars clickable to update state panel
+      const chartDiv = document.getElementById(divId);
+      chartDiv.on("plotly_click", (data) => {
+        if (!data || !data.points || !data.points.length) return;
+        const stateCode = data.points[0].x;
+        setStatus(`Filtering detail panel for state ${stateCode}…`);
+        renderCustomerStateDetail(stateCode)
+          .then(() => setStatus(`Dashboards ready. State filter: ${stateCode}.`))
+          .catch(err => {
+            console.error(err);
+            setStatus("Error loading state detail panel.", true);
+          });
+      });
     }
 
     async function chartCustomerBottomStates() {
@@ -947,12 +966,14 @@
       const sizes = [];
       const texts = [];
       const counts = [];
+      const states = [];
 
       rows.forEach(r => {
         const state  = r.f[0].v;
         const count  = Number(r.f[1].v);
         const coords = BRAZIL_STATE_COORDS[state];
         if (!coords) return;
+        states.push(state);
         counts.push(count);
         lats.push(coords.lat);
         lons.push(coords.lon);
@@ -962,10 +983,12 @@
       if (!counts.length) return;
       const maxCount = Math.max(...counts);
       counts.forEach(c => {
-        sizes.push(6 + (c / maxCount) * 20);
+        sizes.push(8 + (c / maxCount) * 24);   // a bit bigger for visibility
       });
 
-      Plotly.newPlot("cust-map", [{
+      const divId = "cust-map";
+
+      Plotly.newPlot(divId, [{
         type: "scattergeo",
         mode: "markers",
         lat: lats,
@@ -974,7 +997,15 @@
         marker: {
           size: sizes,
           sizemode: "area",
-          opacity: 0.85
+          opacity: 0.95,
+          color: counts,
+          colorscale: [
+            [0, "#0ea5e9"],
+            [0.5, "#22c55e"],
+            [1, "#f97316"]
+          ],
+          reversescale: false,
+          line: { color: "#e5e7eb", width: 0.7 }
         },
         hovertemplate: "%{text}<extra></extra>"
       }], {
@@ -983,14 +1014,76 @@
           scope: "south america",
           projection: { type: "mercator" },
           center: { lat: -14, lon: -52 },
-          lonaxis: { range: [-75, -30] },
+          // focus region tighter around Brazil
+          lonaxis: { range: [-75, -32] },
           lataxis: { range: [5, -35] },
           showland: true,
           landcolor: "#020617",
           countrycolor: "#4b5563",
-          showcountries: true
+          subunitcolor: "#374151",
+          showcountries: true,
+          showlakes: false,
+          showrivers: false
         }
       }, { responsive: true });
+
+      // allow clicking bubbles to update detail panel
+      const mapDiv = document.getElementById(divId);
+      mapDiv.on("plotly_click", (data) => {
+        if (!data || !data.points || !data.points.length) return;
+        // We stored states in the same order as points
+        const pointIndex = data.points[0].pointIndex;
+        const stateCode  = states[pointIndex];
+        setStatus(`Filtering detail panel for state ${stateCode}…`);
+        renderCustomerStateDetail(stateCode)
+          .then(() => setStatus(`Dashboards ready. State filter: ${stateCode}.`))
+          .catch(err => {
+            console.error(err);
+            setStatus("Error loading state detail panel.", true);
+          });
+      });
+    }
+
+    // state detail panel
+    async function renderCustomerStateDetail(stateCode) {
+      if (!stateCode) return;
+
+      const sql = `
+        SELECT
+          c.customer_state,
+          COUNT(DISTINCT f.customer_id) AS customers,
+          COUNT(DISTINCT f.order_id)    AS orders,
+          SUM(f.gross_order_item_value) AS revenue
+        FROM \`${PROJECT_ID}.${DATASET_FACT}.fact_db_order_items\` f
+        JOIN \`${PROJECT_ID}.${DATASET_DIM}.dim_db_customers\` c
+          ON f.customer_id = c.customer_id
+        WHERE c.customer_state = '${stateCode}'
+        GROUP BY c.customer_state
+      `;
+      const rows = await runQuery(sql);
+      const panel = document.getElementById("cust-state-detail");
+
+      if (!rows.length) {
+        panel.innerHTML = `<p>No data found for state <strong>${stateCode}</strong>.</p>`;
+        return;
+      }
+
+      const f = rows[0].f;
+      const customers = Number(f[1].v || 0);
+      const orders    = Number(f[2].v || 0);
+      const revenue   = Number(f[3].v || 0);
+
+      panel.innerHTML = `
+        <p style="margin-top:0;">State: <strong style="color:var(--accent-alt);">${stateCode}</strong></p>
+        <ul style="padding-left:18px; margin-top:4px;">
+          <li>Customers: <strong>${customers.toLocaleString()}</strong></li>
+          <li>Orders: <strong>${orders.toLocaleString()}</strong></li>
+          <li>Revenue: <strong>R$ ${revenue.toLocaleString(undefined,{maximumFractionDigits:0})}</strong></li>
+        </ul>
+        <p style="margin-top:6px;">
+          Tip: click a different bar in <em>Top 5 States by Customers</em> or a different map bubble.
+        </p>
+      `;
     }
 
     /********** 6. SELLER CHARTS **********/
@@ -1149,7 +1242,7 @@
       }, { responsive: true });
     }
 
-    /********** 7. ORDER CHARTS **********/
+    /********** 7. ORDER CHARTS & CATEGORY DETAIL **********/
     async function chartOrderRevenueYear() {
       const sql = `
         SELECT
@@ -1202,16 +1295,107 @@
         categories.push(r.f[0].v || "Unknown");
         revenue.push(Number(r.f[1].v));
       });
-      Plotly.newPlot("order-category-revenue", [{
+
+      const divId = "order-category-revenue";
+
+      Plotly.newPlot(divId, [{
         type: "bar",
         x: revenue,
         y: categories,
         orientation: "h",
+        marker: { color: "#f97316" },
         hovertemplate: "%{y}<br>R$ %{x:,.0f}<extra></extra>"
       }], {
         margin: { t: 18, l: 150, r: 10, b: 26 },
         xaxis: { title: "Revenue (BRL)" }
       }, { responsive: true });
+
+      // click to show category detail
+      const chartDiv = document.getElementById(divId);
+      chartDiv.on("plotly_click", (data) => {
+        if (!data || !data.points || !data.points.length) return;
+        const category = data.points[0].y;
+        setStatus(`Loading detail for category "${category}"…`);
+        renderCategoryDetail(category)
+          .then(() => setStatus(`Dashboards ready. Category: ${category}.`))
+          .catch(err => {
+            console.error(err);
+            setStatus("Error loading category detail.", true);
+          });
+      });
+    }
+
+    // Category detail: revenue by year + share of total
+    async function renderCategoryDetail(category) {
+      const panel = document.getElementById("order-category-detail");
+      const safeCategory = category.replace("'", "\\'");
+
+      const sql = `
+        WITH cat AS (
+          SELECT
+            d.year,
+            SUM(f.gross_order_item_value) AS revenue
+          FROM \`${PROJECT_ID}.${DATASET_FACT}.fact_db_order_items\` f
+          JOIN \`${PROJECT_ID}.${DATASET_DIM}.dim_db_products\` p
+            ON f.product_id = p.product_id
+          JOIN \`${PROJECT_ID}.${DATASET_DIM}.dim_db_dates\` d
+            ON f.order_date_key = d.date_key
+          WHERE COALESCE(p.product_category_name_english, p.product_category_name) = '${safeCategory}'
+          GROUP BY year
+        ),
+        total AS (
+          SELECT
+            d.year,
+            SUM(f.gross_order_item_value) AS revenue
+          FROM \`${PROJECT_ID}.${DATASET_FACT}.fact_db_order_items\` f
+          JOIN \`${PROJECT_ID}.${DATASET_DIM}.dim_db_dates\` d
+            ON f.order_date_key = d.date_key
+          GROUP BY year
+        )
+        SELECT
+          t.year,
+          c.revenue AS cat_revenue,
+          t.revenue AS total_revenue
+        FROM total t
+        LEFT JOIN cat c
+          ON c.year = t.year
+        ORDER BY year
+      `;
+      const rows = await runQuery(sql);
+      if (!rows.length) {
+        panel.innerHTML = `<p>No data for category <strong>${category}</strong>.</p>`;
+        return;
+      }
+
+      let html = `<p style="margin-top:0;">Category: <strong style="color:var(--accent-warm);">${category}</strong></p>`;
+      html += `<table style="width:100%;border-collapse:collapse;font-size:11px;">
+        <thead>
+          <tr>
+            <th style="text-align:left;border-bottom:1px solid #374151;padding:4px;">Year</th>
+            <th style="text-align:right;border-bottom:1px solid #374151;padding:4px;">Category Revenue</th>
+            <th style="text-align:right;border-bottom:1px solid #374151;padding:4px;">Share of Total</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      rows.forEach(r => {
+        const year   = r.f[0].v;
+        const catRev = Number(r.f[1].v || 0);
+        const totRev = Number(r.f[2].v || 0);
+        const share  = totRev ? (catRev / totRev) * 100 : 0;
+        html += `<tr>
+          <td style="padding:4px;">${year}</td>
+          <td style="padding:4px;text-align:right;">R$ ${catRev.toLocaleString(undefined,{maximumFractionDigits:0})}</td>
+          <td style="padding:4px;text-align:right;">${share.toFixed(1)}%</td>
+        </tr>`;
+      });
+
+      html += `</tbody></table>
+        <p style="margin-top:6px;">
+          Tip: click another bar in <em>Top Categories by Revenue</em> to compare segments.
+        </p>`;
+
+      panel.innerHTML = html;
     }
 
     async function chartOrdersYearMonth() {
@@ -1305,7 +1489,7 @@
         chartTopSellersByRevenue()
       ]);
 
-      setStatus("Dashboards ready. Use the tabs to switch views, hover & zoom on any chart.");
+      setStatus("Dashboards ready. Use the tabs to switch views. Click bars & bubbles to see details.");
     }
 
     /********** 9. AUTH & INIT **********/
@@ -1342,7 +1526,7 @@
         setStatus("Failed to load Google API JS.", true);
       }
 
-      const signInBtn = document.getElementById("signin-button");
+      const signInBtn  = document.getElementById("signin-button");
       const signOutBtn = document.getElementById("signout-button");
 
       signInBtn.onclick = () => {
@@ -1356,7 +1540,7 @@
             setStatus("Error getting access token.", true);
             return;
           }
-          signInBtn.style.display = "none";
+          signInBtn.style.display  = "none";
           signOutBtn.style.display = "inline-block";
           setStatus("Signed in. Loading dashboards…");
           renderAllCharts().catch(err => {
@@ -1373,7 +1557,7 @@
           google.accounts.oauth2.revoke(token.access_token, () => {
             gapi.client.setToken(null);
             signOutBtn.style.display = "none";
-            signInBtn.style.display = "inline-block";
+            signInBtn.style.display  = "inline-block";
             setStatus("Signed out. Sign in again to reload dashboards.");
           });
         }
