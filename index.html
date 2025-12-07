@@ -159,6 +159,14 @@
     #top-sellers {
       overflow-y: auto;
     }
+
+    /* small "About" card text */
+    #about-text {
+      padding: 12px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.45;
+    }
   </style>
 </head>
 <body>
@@ -216,7 +224,7 @@
         <div class="card-header">
           <div>
             <div class="card-title">Top 50 Product Categories Sold</div>
-            <div class="card-subtitle">Order item count (fact_orders + olist_products)</div>
+            <div class="card-subtitle">Order item count (fact_orders + products)</div>
           </div>
         </div>
         <div id="top-categories" class="chart"></div>
@@ -233,17 +241,29 @@
         <div id="sales-month" class="chart"></div>
       </article>
 
-      <!-- Notes -->
+      <!-- About / Notes -->
       <article class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">Notes</div>
-            <div class="card-subtitle">Extend with your own charts later</div>
+            <div class="card-title">About this Dashboard</div>
+            <div class="card-subtitle">How leadership can use it</div>
           </div>
         </div>
-        <div class="chart" style="padding:12px;font-size:13px;color:#666;">
-          You can duplicate the JS query pattern below to add:
-          average review scores, revenue by state, payment types, etc.
+        <div id="about-text">
+          <p>
+            This dashboard summarizes Brazilian e-commerce performance using Olist data.
+            It shows where customers and sellers are located, which product
+            categories sell the most, and how order volume changes by month.
+          </p>
+          <p>
+            Use it to answer questions like:
+          </p>
+          <ul>
+            <li>Which regions have the strongest customer base vs. seller supply?</li>
+            <li>Who are our top sellers and how concentrated is revenue?</li>
+            <li>Which product categories drive the majority of order volume?</li>
+            <li>Are we growing month-on-month, and where do we see seasonality?</li>
+          </ul>
         </div>
       </article>
     </section>
@@ -406,7 +426,7 @@
         name: r.f[0].v || "Unknown",
         count: Number(r.f[1].v)
       }));
-      // Sort ascending so highest at top of horizontal bar chart
+      // Sort ascending so highest at top for horizontal bar
       arr.sort((a, b) => a.count - b.count);
 
       const names = arr.map(x => x.name);
@@ -527,4 +547,3 @@
   </script>
 </body>
 </html>
-
