@@ -502,9 +502,19 @@
       setStatus("Initializing Google client …");
       gapi.load("client:auth2", initClient);
     }
+
+    function gapiLoadError() {
+      setStatus("Failed to load Google API JS.", true);
+    }
   </script>
 
   <!-- Google API JS (calls gapiLoaded when ready) -->
-  <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+  <script
+    async
+    defer
+    src="https://apis.google.com/js/api.js"
+    onload="gapiLoaded()"
+    onerror="gapiLoadError()"
+  ></script>
 </body>
 </html>
